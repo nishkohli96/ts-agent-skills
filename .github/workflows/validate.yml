@@ -1,0 +1,41 @@
+name: Validate skills
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install Agent Skills validator
+        run: pip install skills-ref==0.1.1
+
+      - name: Validate every skill
+        run: |
+          status=0
+          for dir in skills/*/; do
+            agentskills validate "$dir" || status=1
+          done
+          exit $status
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Check links in Markdown
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --no-progress --max-retries 3 './**/*.md'
+          fail: true

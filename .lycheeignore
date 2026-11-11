@@ -1,0 +1,3 @@
+# Live only after first install / first release
+^https://skills\.sh/
+^https://github\.com/nishkohli96/ts-agent-skills/(tree|releases)/
