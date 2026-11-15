@@ -105,6 +105,7 @@ skills/
 └── ts-agent-skills/
     ├── SKILL.md
     └── references/
+        ├── environment.md
         ├── folder-structure.md
         ├── redux.md
         ├── theme.md

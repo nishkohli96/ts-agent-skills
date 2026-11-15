@@ -16,7 +16,7 @@ README.md             # user-facing docs and install instructions
 
 ## Editing rules
 
-- **No code snippets in the skill.** Rules, structure and naming only; agents verify syntax in official docs. Folder trees are fine.
+- **No library code snippets in the skill.** Rules, structure and naming only; agents verify library syntax in official docs. Folder trees are fine. Exception: dependency-free templates the project owns (e.g. `references/environment.md`) may include code; keep it type-checked under strict mode.
 - **Version-agnostic.** Don't hard-code API names, config syntax or version numbers that change between releases; point to the official docs instead.
 - **Keep `SKILL.md` lean** (well under 500 lines). Put detail in `references/` and add a row to the routing table in `SKILL.md` for any new reference file.
 - **Frontmatter:** only `name`, `description` and `license`. `name` must match the folder name. Update `description` trigger words when adding a new framework or library.

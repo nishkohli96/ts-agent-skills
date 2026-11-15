@@ -1,3 +1,8 @@
-# Live only after first install / first release
+# Badge resolves only after skills.sh counts installs
 ^https://skills\.sh/
-^https://github\.com/nishkohli96/ts-agent-skills/(tree|releases)/
+
+# npm blocks automated requests (403); package links are valid
+^https://www\.npmjs\.com/
+
+# A new version's release page only exists after the tag is pushed, so PRs would fail
+^https://github\.com/nishkohli96/ts-agent-skills/releases/tag/
