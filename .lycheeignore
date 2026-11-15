@@ -1,3 +1,5 @@
-# Live only after first install / first release
+# Badge resolves only after skills.sh counts installs
 ^https://skills\.sh/
-^https://github\.com/nishkohli96/ts-agent-skills/(tree|releases)/
+
+# npm blocks automated requests (403); package links are valid
+^https://www\.npmjs\.com/

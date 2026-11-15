@@ -4,7 +4,7 @@ description: Standards and best practices for building, vibe-coding, refactoring
 license: MIT
 metadata:
   author: nishkohli96
-  version: "1.0.1"
+  version: "1.1.0"
 ---
 
 # TypeScript Agent Skills
@@ -20,6 +20,7 @@ This file holds the core rules. Read the matching reference file when the task t
 | Theming, design tokens, dark mode | `references/theme.md` |
 | React / Next.js UI, data fetching, forms, styling | `references/frontend.md` |
 | Node / Express / NestJS APIs, databases, queues | `references/backend.md` |
+| Environment variables, `.env`, app config | `references/environment.md` |
 | Auth, user input, uploads, tests | `references/security-testing.md` |
 
 ## Before writing code
@@ -27,7 +28,7 @@ This file holds the core rules. Read the matching reference file when the task t
 1. Read the repo first: `package.json`, lockfile, `tsconfig.json`, lint/format config, folder layout, existing patterns. Match them over these defaults.
 2. Check installed versions (React 18 vs 19, Next pages vs app router, ESLint 8 vs 9, Express 4 vs 5, Zod 3 vs 4, Tailwind 3 vs 4).
 3. Detect the package manager from the lockfile (`package-lock.json`, `pnpm-lock.yaml`, `yarn.lock`, `bun.lock`) and use only that one.
-4. **Verify syntax in the official docs before writing code.** This skill sets rules and structure only; it deliberately has no code snippets because APIs change. Fetch the docs page for the installed version with whatever web or docs tool is available (web fetch, Context7, Firecrawl, etc.) and follow it. Never write APIs or package names from memory alone. See "Official docs" at the end.
+4. **Verify syntax in the official docs before writing code.** This skill sets rules and structure only; it has no library code snippets because APIs change (the env template in `references/environment.md` is the one exception: it uses no libraries). Fetch the docs page for the installed version with whatever web or docs tool is available (web fetch, Context7, Firecrawl, etc.) and follow it. Never write APIs or package names from memory alone. See "Official docs" at the end.
 5. For non-trivial work, state a short plan: files touched, types/contracts, edge cases.
 6. Prefer small, reviewable diffs. One concern per change.
 
@@ -69,7 +70,8 @@ Trust nothing that crosses a boundary: HTTP bodies/queries/params, env vars, `lo
 
 - Use a schema library (Zod, Valibot, class-validator for NestJS DTOs). Infer TS types from the schema.
 - Share schemas between client and server in a monorepo.
-- Env: parse `process.env` once at boot into a typed, exported `env` object (`constants/environment.ts`); crash on invalid config. Never read `process.env` elsewhere.
+- Env: read `process.env` once at boot in `constants/environment.ts` and export a frozen, fully typed config object; never read `process.env` elsewhere.
+  - Use the template in `references/environment.md` as-is: small private typed helpers (no schema library) that report every invalid variable in one error.
 
 ## Error handling
 
