@@ -3,3 +3,6 @@
 
 # npm blocks automated requests (403); package links are valid
 ^https://www\.npmjs\.com/
+
+# A new version's release page only exists after the tag is pushed, so PRs would fail
+^https://github\.com/nishkohli96/ts-agent-skills/releases/tag/
