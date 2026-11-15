@@ -127,6 +127,9 @@ src/
 
 - Tests sit next to the file (`service.test.ts`) or in a top-level `tests/` folder; pick one per repo.
 - Keep `index.ts` barrels small, at folder boundaries only. Deep barrels slow builds, break tree-shaking and cause circular imports.
+- Consumers import from the barrel, not from files inside the folder: one `import { … } from '@/lib'` instead of several `@/lib/redis`, `@/lib/stripe` lines. When adding a file to a barrelled folder, add its exports to `index.ts`.
+- Inside a folder, files import each other by relative path (`./redis`), never through their own barrel, to avoid circular imports.
+- In an `index.ts` barrel, order the `export … from` (or `import … from`) statements alphabetically by path, matching the order the files and folders appear in the folder: `./analytics`, `./currency`, `./user`. Keep this order when adding a new file. If the repo's lint config already sorts imports/exports, follow it instead.
 - Never re-export client components (`'use client'` files) or client hooks from a shared barrel. Import them by direct path (`@/components/layout/NavMenu`). A mixed barrel pulls every re-exported module into whatever imports it: client bundles grow, and server-only code (DB, secrets, `server-only` imports) can leak into or break client builds.
 - Never put `'use client'` at the top of an `index.ts`; it turns every re-export into a client component.
 - If many client components need grouping, give them a separate barrel (e.g. `components/client/index.ts`) imported only by client code.
